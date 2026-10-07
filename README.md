@@ -11,8 +11,6 @@
 | 列表重建后头像永久空缺（重建帧新旧项共存，导致内部索引列表错位）；滚动划入划出时头像被重置为玩家 | 裁剪按视觉位置直接取子物体组件（不再依赖内部索引列表）；列表项上的 `PlayerSetRandomFace.setFace` 跳过 |
 | 打开其他窗口时点击地图会穿透误刷新左侧 NPC 列表（Unity UI 不阻挡物理射线，右键穿透触发“远程查看/刷新”） | 三个点击组件（大地图节点 / 海图节点 / 灵舟）在鼠标位于 UI 上时不响应 |
 | 海域船只补丁在 `MonstarList` 为空时抛出越界异常（会打断游戏自身的创建流程）、或对同一船只重复叠加组件 | 增加空列表保护与重复组件检查 |
-| 大地图人数标记文字的对齐与原版不一致 | 修正为与原版一致的 `LowerCenter`（下居中） |
-
 ## 功能（与原版一致）
 
 - 宁州大地图野外地点的 **NPC 人数标记**（受神识范围限制，可在配置中关闭）
@@ -51,15 +49,6 @@
    ```
 3. 产物：`bin\Release\MapEnhanced.dll`
 
-## 部署
-
-将编译产物（或 `release\MapEnhanced-1.7.0.dll`）替换工坊 mod 的插件文件：
-
-```
-steamapps\workshop\content\1189490\2825162391\plugins\MapEnhanced.dll
-```
-
-建议保留原版备份为 `MapEnhanced.dll.1.4.1.bak`（改为其他后缀后 BepInEx 不会加载它）。回滚：换回原名即可。
 
 ## 代码结构
 
@@ -83,8 +72,4 @@ MapEnhanced/
   UINPCLeftListExt.cs         远程 NPC 列表 UI 重建
 ```
 
-## 注意事项
 
-- **Steam 更新该 mod 时会覆盖修复版 DLL**，需要重新替换（可用 `release\MapEnhanced-1.7.0.dll`）
-- 反编译/比对工具：`dotnet tool install --global ilspycmd --version 8.2.0.7535`（新版需 .NET 8）
-- 排查加载问题：查看 `workshop\content\1189490\2824349934\BepInEx\LogOutput.log`，搜索 `Loading [地图增强`；游戏内报错在 `MCSSave\errorlog.log`
